@@ -5,7 +5,7 @@ from Base.BaseExcel import *
 from Base.BaseStatistics import readInfo
 
 
-def read_excel(file='c:/test.xls'):
+def read_excel(file='e:/test.xls'):
     data = xlrd.open_workbook(file)
     table = data.sheet_by_index(0)
     nrows = table.nrows

@@ -5,21 +5,35 @@ from Base.BaseElementEnmu import Element
 from Base.BaseParams import BaseParams
 from Base.BaseStatistics import writeInfo
 
+
 class Config(object):
     def __init__(self):
         pass
 
     def config_req(self, kw):
         app = {}
-        header = {"Accept": "*/*", "Content-Type": "application/json;charset=utf-8"}
+        header = {
+                  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) ''Chrome/68.0.3440.'
+                                '84 Safari/53''7.36'
+                  }
         for item in kw:
             url = "%s://%s" % (item["protocol"], item["url"])
             print("==请求url:%s==" % url)
             print("==请求参数:%s==" % item["params"])
+            a = 'http://w-beta-1000.chemanman.com:4901/api/Login/Login/login?gid=320'
+            n = 'req'
+            m = '{"group_id":"320","user_name":"CY","password":"202cb962ac59075b964b07152d234b70"}'
+            b = {
+                n: m
+            }
+            print(b)
             if item["method"] == "get":
-                res = requests.get(url, data=json.dumps(ast.literal_eval(item["params"])), headers=header, verify=False)
+                res = requests.get(url, data=json.dumps(ast.literal_eval(item["params"])), headers=header)
             elif item["method"] == "post":
-                res = requests.post(url, data=json.dumps(ast.literal_eval(item["params"])), headers=header, verify=False)
+                res = requests.post(url, data=b, headers=header)
+                print('出错了')
+                print(res.request.body)
+                print(res.text)
             else:
                 print("现在只针post和ge方法进行了测试，其他方法请自行扩展")
             app["url"] = item["url"]
@@ -38,7 +52,8 @@ class Config(object):
 
     def config_req_pict(self, kw, req=None):
         app = {}
-        header = {"Accept": "*/*", "Content-Type": "application/json;charset=utf-8"}
+        header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) ''Chrome/68.0.3440.'
+                                '84 Safari/53''7.36'}
         for item in kw:
             url = "%s://%s" % (item["protocol"], item["url"])
             params = BaseParams().param_fi(ast.literal_eval(item["params"]))["params"]
@@ -83,3 +98,21 @@ class Config(object):
                 if fact.get(k, "") == hope[k]:
                     return "通过"
         return "失败"
+
+"""
+a = 'http://w-beta-1000.chemanman.com:4901/api/Login/Login/login?gid=320'
+n = 'req'
+m = '{"group_id":"320","user_name":"CY","password":"202cb962ac59075b964b07152d234b70"}'
+b = {
+    n: m
+}
+
+
+c = {"Accept": "*/*", "Content-Type": "application/json;charset=utf-8", 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) ''Chrome/68.0.3440.'
+                                '84 Safari/53''7.36'}
+# = bytes(b, encoding="utf8")
+print(b)
+res = requests.post(url=a, data=b, headers=c)
+print(res.request.body)
+print(res.text)
+"""
